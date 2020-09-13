@@ -2,7 +2,7 @@
 API used as an interface with some Angular tests
 
 Some pieces from this project:
-*SpringBoot
+*SpringBoot*
 *MySql
 *SpringDataJpa
 *JavaMail
