@@ -14,11 +14,14 @@ import javax.mail.internet.InternetAddress;
 @Component
 public class EmailConstructor {
 
-    @Autowired
     private Environment env;
+    private TemplateEngine templateEngine;
 
     @Autowired
-    private TemplateEngine templateEngine;
+    public EmailConstructor(Environment env, TemplateEngine templateEngine) {
+        this.env = env;
+        this.templateEngine = templateEngine;
+    }
 
     public MimeMessagePreparator constructNewUserEmail(User user, String password) {
         Context context = new Context();

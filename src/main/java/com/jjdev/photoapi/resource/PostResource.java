@@ -44,8 +44,12 @@ public class PostResource {
     }
 
     @GetMapping("/getPostById/{postId}")
-    public Post getOnePostById(@PathVariable("postId") Long id) {
-        return postService.getPostById(id);
+    public ResponseEntity<?> getOnePostById(@PathVariable("postId") Long id) {
+        Post post = postService.getPostById(id);
+        if (post == null) {
+            return new ResponseEntity<>("No Post Found", HttpStatus.OK);
+        }
+        return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
     @GetMapping("/getPostByUsername/{username}")

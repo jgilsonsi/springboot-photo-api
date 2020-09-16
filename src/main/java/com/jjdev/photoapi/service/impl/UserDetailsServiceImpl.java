@@ -12,15 +12,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    AccountService accountService;
+    private AccountService accountService;
 
     @Autowired
     public UserDetailsServiceImpl(AccountService accountService) {
@@ -33,11 +33,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("Username " + username + " was not found");
         }
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        Collection<GrantedAuthority> authorities;
         Set<UserRole> userRoles = user.getUserRoles();
-        userRoles.forEach(userRole -> {
-            authorities.add(new SimpleGrantedAuthority(userRoles.toString()));
-        });
+        authorities = userRoles.stream()
+                .map(userRole -> new SimpleGrantedAuthority(userRoles.toString()))
+                .collect(Collectors.toList());
         return new User(user.getUsername(), user.getPassword(), authorities);
     }
 }

@@ -68,7 +68,9 @@ public class AccountServiceImpl implements AccountService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        mailSender.send(emailConstructor.constructNewUserEmail(user, password));
+        //TODO - Temporary log to avoid sending emails
+        //mailSender.send(emailConstructor.constructNewUserEmail(user, password));
+        System.out.println("Generated password: " + password);
         return user;
     }
 
